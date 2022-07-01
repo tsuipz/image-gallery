@@ -1,0 +1,32 @@
+.images {
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1rem;
+}
+
+.images div {
+	max-width: 25rem;
+	max-height: 25rem;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 1.5rem;
+}
+
+.images div > img {
+	object-fit: cover;
+}
+
+@media (max-width: 425px) {
+	.images {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.images div {
+		max-width: 20rem;
+		max-height: 20rem;
+	}
+}
