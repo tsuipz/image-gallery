@@ -48,7 +48,6 @@ const useHttp = () => {
 			if (!response.ok) throw new Error('Send Request Failed');
 
 			const responseData = await response.json();
-			console.log(responseData);
 			dispatchHttp({ type: 'RESPONSE', responseData: responseData });
 		} catch (error) {
 			dispatchHttp({ type: 'ERROR', errorMessage: error.message });

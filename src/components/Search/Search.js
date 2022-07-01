@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useHttp from '../../hook/http';
 import { imageActions } from '../../store/images-slice';
 
@@ -7,6 +7,7 @@ import classes from './Search.module.css';
 
 const Search = React.memo(() => {
 	const dispatch = useDispatch();
+	const pages = useSelector((state) => state.images.pages);
 	const [enteredSearch, setEnteredSearch] = useState('');
 	const inputRef = useRef();
 	const { isLoading, data, error, sendRequest, baseUrl } = useHttp();
@@ -17,8 +18,8 @@ const Search = React.memo(() => {
 			if (enteredSearch === inputRef.current.value) {
 				const query =
 					enteredSearch.length === 0
-						? 'curated?page=1&per_page=10'
-						: `search?query=${enteredSearch}&page=1&per_page=10`;
+						? `curated?page=${pages}&per_page=10`
+						: `search?query=${enteredSearch}&page=${pages}&per_page=10`;
 				sendRequest(baseUrl + query, 'GET');
 			}
 		}, 500);
@@ -26,7 +27,7 @@ const Search = React.memo(() => {
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [baseUrl, enteredSearch, inputRef, sendRequest]);
+	}, [baseUrl, enteredSearch, inputRef, pages, sendRequest]);
 
 	// Updates Images
 	useEffect(() => {
@@ -38,6 +39,7 @@ const Search = React.memo(() => {
 					imageurl: data.photos[key].src,
 				});
 			}
+			console.log(loadedImages);
 			dispatch(imageActions.updateImages(loadedImages));
 		}
 	}, [data, isLoading, error, dispatch]);

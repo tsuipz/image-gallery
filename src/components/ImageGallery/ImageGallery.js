@@ -8,8 +8,6 @@ const ImageGallery = () => {
 	const imagesList = useSelector((state) => state.images.images);
 
 	const imageList = useMemo(() => {
-		console.log(imagesList);
-		console.log('hello');
 		return <ImageList images={imagesList} />;
 	}, [imagesList]);
 

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	images: [],
-	startPage: 1,
+	pages: 1,
 	MAX_PAGES: 800,
 };
 
@@ -11,14 +11,13 @@ const imagesSlice = createSlice({
 	initialState,
 	reducers: {
 		updateImages(state, action) {
-			console.log(action.payload);
 			state.images = action.payload;
 		},
 		nextPage(state) {
-			state.startPage++;
+			state.pages++;
 		},
 		prevPage(state) {
-			state.endPage--;
+			state.pages--;
 		},
 	},
 });

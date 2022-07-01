@@ -1,15 +1,19 @@
 import React from 'react';
+import useHttp from '../../hook/http';
 
 import classes from './ImageList.module.css';
 
 const ImageList = React.memo((props) => {
+	const { isLoading } = useHttp();
+
 	return (
 		<section className={classes.images}>
-			{props.images.map((photo) => (
-				<div key={photo.id}>
-					<img key={photo.id} src={photo.imageurl.medium} alt='' />
-				</div>
-			))}
+			{!isLoading &&
+				props.images.map((photo) => (
+					<div key={photo.id}>
+						<img src={photo.imageurl.medium} alt='' />
+					</div>
+				))}
 		</section>
 	);
 });
