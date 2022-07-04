@@ -1,12 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useHttp from '../../hook/http';
 import { imageActions } from '../../store/images-slice';
+
+import classes from './Pagination.module.css';
 
 const Pagination = () => {
 	const dispatch = useDispatch();
 	const pages = useSelector((state) => state.images.pages);
-	const MAX_PAGES = useSelector((state) => state.images.MAX_PAGES);
+	const prevPage = useSelector((state) => state.images.prevPage);
+	const nextPage = useSelector((state) => state.images.nextPage);
 
 	const decreasePage = () => {
 		dispatch(imageActions.prevPage());
@@ -17,17 +19,25 @@ const Pagination = () => {
 	};
 
 	const showLeftArrow = () => {
-		const button = <button onClick={decreasePage}>&lt;</button>;
-		return pages > 1 ? button : '';
+		const button = (
+			<button className={classes.prev} onClick={decreasePage}>
+				&lt;
+			</button>
+		);
+		return prevPage !== undefined && pages > 1 ? button : <div></div>;
 	};
 
 	const showRightArrow = () => {
-		const button = <button onClick={increasePage}>&gt;</button>;
-		return pages < MAX_PAGES ? button : '';
+		const button = (
+			<button className={classes.next} onClick={increasePage}>
+				&gt;
+			</button>
+		);
+		return nextPage !== undefined ? button : <div></div>;
 	};
 
 	return (
-		<section className=''>
+		<section className={classes.button}>
 			{showLeftArrow()}
 			{pages}
 			{showRightArrow()}

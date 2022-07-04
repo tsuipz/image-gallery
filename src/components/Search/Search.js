@@ -37,10 +37,18 @@ const Search = React.memo(() => {
 				loadedImages.push({
 					id: key,
 					imageurl: data.photos[key].src,
+					alt: data.photographer,
 				});
 			}
 			console.log(loadedImages);
-			dispatch(imageActions.updateImages(loadedImages));
+			dispatch(
+				imageActions.updateImages({
+					images: loadedImages,
+					page: data.page,
+					prevPage: data.prev_page,
+					nextPage: data.next_page,
+				})
+			);
 		}
 	}, [data, isLoading, error, dispatch]);
 

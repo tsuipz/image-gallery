@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import ImageList from './ImageList';
-import classes from './ImageGallery.module.css';
 
 const ImageGallery = () => {
 	const imagesList = useSelector((state) => state.images.images);
