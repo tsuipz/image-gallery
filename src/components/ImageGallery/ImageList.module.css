@@ -6,24 +6,35 @@
 	gap: 1.5rem;
 }
 
-.images div {
+.image {
 	max-width: 23rem;
 	max-height: 23rem;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 	border-radius: 1.5rem;
 	background-color: var(--grey-color);
 }
 
-.images div > img {
+.image > img {
 	animation-delay: 2s;
 	transition: all 2s ease;
 	animation: loadingPlaceholder 5s;
 	flex-shrink: 0;
 	min-width: 100%;
 	min-height: 100%;
+}
+
+.photo > a {
+	text-decoration: none;
+	color: var(--text-color);
+}
+
+.photo > a > p {
+	font-size: 1.6rem;
+	padding-top: 0.5rem;
 }
 
 @keyframes loadingPlaceholder {

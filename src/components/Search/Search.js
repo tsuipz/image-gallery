@@ -33,11 +33,13 @@ const Search = React.memo(() => {
 	useEffect(() => {
 		if (!isLoading && !error && data) {
 			const loadedImages = [];
+			console.log(data);
 			for (const key in data.photos) {
 				loadedImages.push({
 					id: key,
 					imageurl: data.photos[key].src,
-					alt: data.photographer,
+					photographer: data.photos[key].photographer,
+					url: data.photos[key].photographer_url,
 				});
 			}
 			console.log(loadedImages);
