@@ -1,13 +1,12 @@
 # Image Gallery
 
-This app is to calculate the tip between splitting with the group or per person.
+This app is to display an image gallery using Pexels API.
 
 ## Features
 
-- Split expenses with a group of people
-- Input the price per person and calculate on how much each person should owe depending on tax and tip
-- Optional Tax and Tip add-ons
-- Tip on Pre-Tax and Post-Tax calculation
+- Display images on using Pexels API.
+- Search images
+- Pagination on pages
 
 ## Run Locally
 
@@ -19,3 +18,4 @@ This app is to calculate the tip between splitting with the group or per person.
 ## Technologies
 
 - React
+- Redux
