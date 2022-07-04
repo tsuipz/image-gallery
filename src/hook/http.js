@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from 'react';
 
-const API_KEY = '563492ad6f917000010000011c86afa1de1f4efe922ec4304d06edc5';
+const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = 'https://api.pexels.com/v1/';
 
 const initialState = {
