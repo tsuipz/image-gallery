@@ -9,7 +9,7 @@ const ImageList = React.memo((props) => {
 				<div key={photo.id} className={classes.photo}>
 					<a href={photo.url} target='_blank' rel='noopener noreferrer'>
 						<div className={classes.image}>
-							<img src={photo.imageurl.medium} alt='' />
+							<img src={photo.imageurl.medium} alt={photo.photographer} />
 						</div>
 						<p>{photo.photographer}</p>
 					</a>

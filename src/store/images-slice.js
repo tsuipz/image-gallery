@@ -5,6 +5,7 @@ const initialState = {
 	pages: 1,
 	prevPage: null,
 	nextPage: null,
+	refresh: true,
 };
 
 const imagesSlice = createSlice({
@@ -22,6 +23,10 @@ const imagesSlice = createSlice({
 		},
 		prevPage(state) {
 			state.pages--;
+		},
+		updateRefresh(state, action) {
+			state.refresh = false;
+			state.pages = action.payload.page;
 		},
 	},
 });

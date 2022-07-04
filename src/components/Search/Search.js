@@ -8,18 +8,41 @@ import classes from './Search.module.css';
 const Search = React.memo(() => {
 	const dispatch = useDispatch();
 	const pages = useSelector((state) => state.images.pages);
+	const isRefresh = useSelector((state) => state.images.refresh);
 	const [enteredSearch, setEnteredSearch] = useState('');
 	const inputRef = useRef();
 	const { isLoading, data, error, sendRequest, baseUrl } = useHttp();
 
 	// Get Current and Search Images
 	useEffect(() => {
+		let currentPage, currentSearch;
+		if (isRefresh) {
+			if (sessionStorage.getItem('page')) {
+				currentPage = sessionStorage.getItem('page');
+			} else {
+				currentPage = pages;
+			}
+			if (sessionStorage.getItem('query')) {
+				currentSearch = sessionStorage.getItem('query');
+				inputRef.current.value = currentSearch;
+				setEnteredSearch(sessionStorage.getItem('query'));
+			} else {
+				currentSearch = enteredSearch;
+			}
+			dispatch(imageActions.updateRefresh({ page: currentPage }));
+		} else {
+			currentPage = pages;
+			currentSearch = enteredSearch;
+		}
+
 		const timer = setTimeout(() => {
-			if (enteredSearch === inputRef.current.value) {
+			if (currentSearch === inputRef.current.value) {
 				const query =
-					enteredSearch.length === 0
-						? `curated?page=${pages}&per_page=10`
-						: `search?query=${enteredSearch}&page=${pages}&per_page=10`;
+					currentSearch.length === 0
+						? `curated?page=${currentPage}&per_page=10`
+						: `search?query=${currentSearch}&page=${currentPage}&per_page=10`;
+				sessionStorage.setItem('page', currentPage);
+				sessionStorage.setItem('query', currentSearch);
 				sendRequest(baseUrl + query, 'GET');
 			}
 		}, 500);
@@ -27,13 +50,12 @@ const Search = React.memo(() => {
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [baseUrl, enteredSearch, inputRef, pages, sendRequest]);
+	}, [baseUrl, dispatch, enteredSearch, inputRef, isRefresh, pages, sendRequest]);
 
 	// Updates Images
 	useEffect(() => {
 		if (!isLoading && !error && data) {
 			const loadedImages = [];
-			console.log(data);
 			for (const key in data.photos) {
 				loadedImages.push({
 					id: key,
@@ -42,7 +64,6 @@ const Search = React.memo(() => {
 					url: data.photos[key].photographer_url,
 				});
 			}
-			console.log(loadedImages);
 			dispatch(
 				imageActions.updateImages({
 					images: loadedImages,
